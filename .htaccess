@@ -1,0 +1,15 @@
+# Redirect all requests to HTTPS (if SSL available)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Hide PHP extensions
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 404 /index.html
